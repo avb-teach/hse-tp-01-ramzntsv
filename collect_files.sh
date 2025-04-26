@@ -9,7 +9,7 @@ else
 fi
 eval $search_pattern_command | while read -r path; do
     name=$(basename "$path")
-    сount=${count_files["$name"]:-0}
+    count=${count_files["$name"]:-0}
 
     newname="$name"
     while [[ -e "$2/$newname" ]]; do
