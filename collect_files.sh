@@ -7,7 +7,7 @@ copy_file(){
     local count=${count_files["$name"]:-0}
 
     local newname="$name"
-    while [[-e "$2/$newname"]]; do
+    while [[ -e "$2/$newname" ]]; do
         ((count++))
         newname="${name%.*}$count.${name##*.}"
     done
@@ -16,10 +16,10 @@ copy_file(){
     count_files["$name"]=$((count+1))
 }
 
-if [-n "$3"]; then
+if [ -n "$3" ]; then
     find "$1" -type f | while read -r path; do
         depth=$(echo "$(dirname "$path")" | tr -cd '/' | wc -c)
-        if [["$depth" -le "$3"]]; then
+        if [[ "$depth" -le "$3" ]]; then
             target_dir="$2/$(dirname "$path" | cut -d/ -f2-)"
             mkdir -p "$target_dir"
             copy_file "$path" "$target_dir"
