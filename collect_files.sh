@@ -24,7 +24,7 @@ copy_dir_max_depth(){
     local new_path="${path#$input_dir/}"
     local depth=$(echo "$new_path" | grep -o "/" | wc -l)
     local target_dir
-    if (( depth > "$max_depth" )); then
+    if (( depth > max_depth )); then
         local cut_path=$(echo "$new_path" | cut -d'/' -f1-"$max_depth")
         target_dir="$output_dir/$(dirname "$cut_path")"
 
