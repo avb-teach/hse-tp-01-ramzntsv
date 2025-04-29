@@ -15,6 +15,21 @@ copy_file(){
     cp "$1" "$2/$newname"
     count_files["$name"]=$((count+1))
 }
-find "$1" -type f| while read -r path; do
-    copy_file "$path" "$2"
-done
+if [-n "$4"]; then
+    find "$1" -type f | while read -r path; do
+        depth=$(echo "$(dirname "$path")" | tr -cd '/' | wc -c)
+        if [["$depth" -le "$4"]]; then
+            target_dir="$2/$(dirname "$path" | cut -d/ -f2-)"
+            mkdir -p "$target_dir"
+            copy_file "$path" "$target_dir"
+        else
+            target_dir="$2/$(dirname "$path" | cut -d/ -f2- | cut -d/ -f1)"
+            mkdir -p "$target_dir"
+            copy_file "$path" "$target_dir"
+        fi
+    done
+else
+    find "$1" -type f| while read -r path; do
+        copy_file "$path" "$2"
+    done
+fi 
