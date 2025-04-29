@@ -37,8 +37,8 @@ copy_dir_max_depth(){
 }
 
 find "$input_dir" -type f | while read -r path; do
-    if [ -n "$4" ]; then
-        max_depth="$4"
+    if [ -n "$3" ]; then
+        max_depth="$3"
         copy_dir_max_depth "$path" "$max_depth"
 
     else
